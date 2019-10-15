@@ -3,9 +3,9 @@
         <heading class="mb-6">Laravel Nova Translation Editor</heading>
 
         <a href="?lang=nl">nl</a>
-        <a href="?lang=nl">de</a>
-        <a href="?lang=nl">en</a>
-        <a href="?lang=nl">es</a>
+        <a href="?lang=de">de</a>
+        <a href="?lang=en">en</a>
+        <a href="?lang=es">es</a>
 
         <card v-if="translations" class="flex flex-col my-6">
             <nav class="flex border-b border-50">
