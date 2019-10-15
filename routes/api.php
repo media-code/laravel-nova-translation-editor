@@ -27,7 +27,7 @@ Route::get('/index', function (Request $request) {
 
 Route::post('/save', function (Request $request) {
     if ($request->has(['group', 'key', 'text', 'locale'])) {
-        return LanguageLine::firstOrCreate(
+        return LanguageLine::updateOrCreate(
             [
                 'group' => $request->get('group'),
                 'key'   => $request->get('key')
