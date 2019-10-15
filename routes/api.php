@@ -27,10 +27,10 @@ Route::get('/index', function (Request $request) {
 
 Route::post('/save', function (Request $request) {
     if ($request->has(['group', 'key', 'text', 'locale'])) {
-        return LanguageLine::updateOrCreate(
+         $line = LanguageLine::where('group', $request->get('group'))->where('key', $request->get('key'))->firstOrCreate(
             [
                 'group' => $request->get('group'),
-                'key'   => $request->get('key')
+                'key'   => $request->get('key'),
             ],
             [
                 'group' => $request->get('group'),
@@ -40,6 +40,10 @@ Route::post('/save', function (Request $request) {
                 ],
             ]
         );
+        $translationContent = $line->text;
+        $translationContent[$request->get('locale')] = $request->get('text');
+        $line->text = $translationContent;
+        $line->save();
     } else {
         return response(null, 400);
     }
