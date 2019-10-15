@@ -1,3 +1,5 @@
+# DEZE REPOSITORY NIET VERWIJDEREN, WORDT GEBRUIKT ALS TRANSLATION MANAGER IN VERSCHILLENDE PROJECTEN.
+
 # Laravel Nova Translation Editor
 
 This is the Laravel Nova Tool for managing translations. It's still work in progress.
