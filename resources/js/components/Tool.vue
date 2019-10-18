@@ -3,9 +3,9 @@
         <heading class="mb-6">Laravel Nova Translation Editor</heading>
 
         <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('nl')}" href="?lang=nl">nl</a>
-        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('de')}" href="?lang=de">de</a>
+<!--        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('de')}" href="?lang=de">de</a>-->
         <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('en')}" href="?lang=en">en</a>
-        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('es')}" href="?lang=es">es</a>
+<!--        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('es')}" href="?lang=es">es</a>-->
 
         <card v-if="translations" class="flex flex-col my-6">
             <nav class="flex border-b border-50">
