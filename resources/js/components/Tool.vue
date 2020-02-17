@@ -2,10 +2,7 @@
     <div>
         <heading class="mb-6">Laravel Nova Translation Editor</heading>
 
-        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('nl')}" href="?lang=nl">nl</a>
-<!--        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('de')}" href="?lang=de">de</a>-->
-        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('en')}" href="?lang=en">en</a>
-<!--        <a class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive('es')}" href="?lang=es">es</a>-->
+        <a v-for="(label, locale) in locales" class="btn btn-lang btn-default btn-untranslated" :class="{'btn-translated-selected': isActive(locale)}" :href="'?lang=' + locale">{{ label }}</a>
 
         <card v-if="translations" class="flex flex-col my-6">
             <nav class="flex border-b border-50">
@@ -17,12 +14,11 @@
             </nav>
             <div v-show="active_tab === translation_file"
                  v-for="(translation, translation_file) in translations" :key="translation_file + 'tab'">
-                <h2 class="px-3 py-6 text-80">config('{{translation_file}}')</h2>
                 <table cellpadding="0" cellspacing="0" data-testid="resource-table" class="table w-full">
                     <thead>
                     <tr>
-                        <th class="text-left">Path</th>
-                        <th class="text-left">String</th>
+                        <th class="text-left">Translation key</th>
+                        <th class="text-left">Translation value</th>
                     </tr>
                     </thead>
                     <tbody v-for="(t_object, t_path) in translation">
@@ -64,18 +60,25 @@
             return {
                 apiURL: '/nova-vendor/laravel-nova-translation-editor/',
                 active_locale: Nova.config.locale,
+                locales: [],
                 translations: null,
                 active_tab: null
             }
         },
         mounted() {
             this.getTranslations();
+            this.getLocales();
         },
         methods: {
             getTranslations() {
-                Nova.request().get(this.apiURL + 'index').then(response => {
+                Nova.request().get(this.apiURL + 'get-translatables').then(response => {
                     this.translations = response.data.length !== 0 ? response.data : null;
                     this.active_tab = response.data.length !== 0 ? Object.keys(response.data)[0] : null;
+                });
+            },
+            getLocales: function(){
+                Nova.request().get(this.apiURL + 'get-locales').then(response => {
+                    this.locales = response.data;
                 });
             },
             isActive: function(locale){

@@ -1,10 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Route;
-use Spatie\TranslationLoader\LanguageLine;
-
 /*
 |--------------------------------------------------------------------------
 | Tool API Routes
@@ -16,35 +11,8 @@ use Spatie\TranslationLoader\LanguageLine;
 |
 */
 
-Route::get('/index', function (Request $request) {
-    $translatables = config('trans_editor');
-    $response      = [];
-    foreach ($translatables as $translatable) {
-        $response[$translatable] = Lang::get($translatable);
-    }
-    return $response;
-});
+Route::get('/get-translatables', 'TranslationController@getTranslatables');
 
-Route::post('/save', function (Request $request) {
-    if ($request->has(['group', 'key', 'text', 'locale'])) {
-         $line = LanguageLine::where('group', $request->get('group'))->where('key', $request->get('key'))->firstOrCreate(
-            [
-                'group' => $request->get('group'),
-                'key'   => $request->get('key'),
-            ],
-            [
-                'group' => $request->get('group'),
-                'key'   => $request->get('key'),
-                'text'  => [
-                    $request->get('locale') => $request->get('text')
-                ],
-            ]
-        );
-        $translationContent = $line->text;
-        $translationContent[$request->get('locale')] = $request->get('text');
-        $line->text = $translationContent;
-        $line->save();
-    } else {
-        return response(null, 400);
-    }
-});
+Route::get('/get-locales', 'TranslationController@getLocales');
+
+Route::post('/save', 'TranslationController@save');
