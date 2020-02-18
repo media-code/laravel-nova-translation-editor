@@ -31,27 +31,28 @@ class TranslationController
 
     public function save(Request $request)
     {
-        if ($request->has(['group', 'key', 'text', 'locale'])) {
-            $line = LanguageLine::where('group', $request->get('group'))->where('key', $request->get('key'))->firstOrCreate(
-                [
-                    'group' => $request->get('group'),
-                    'key'   => $request->get('key'),
-                ],
-                [
-                    'group' => $request->get('group'),
-                    'key'   => $request->get('key'),
-                    'text'  => [
-                        $request->get('locale') => $request->get('text')
-                    ],
-                ]
-            );
-            $translationContent = $line->text;
-            $translationContent[$request->get('locale')] = $request->get('text');
-            $line->text = $translationContent;
-            $line->save();
-        } else {
+        if (! $request->has(['group', 'key', 'text', 'locale'])) {
             return response(null, 400);
         }
+
+        $line = LanguageLine::where('group', $request->get('group'))->where('key', $request->get('key'))->firstOrCreate(
+            [
+                'group' => $request->get('group'),
+                'key'   => $request->get('key'),
+            ],
+            [
+                'group' => $request->get('group'),
+                'key'   => $request->get('key'),
+                'text'  => [
+                    $request->get('locale') => $request->get('text')
+                ],
+            ]
+        );
+        $translationContent = $line->text;
+        $translationContent[$request->get('locale')] = $request->get('text');
+        $line->text = $translationContent;
+
+        return ($line->save()) ? response([], 200) : response([], 400);
     }
 
 }

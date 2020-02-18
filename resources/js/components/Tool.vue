@@ -55,6 +55,10 @@
     import ClickToEdit from "./ClickToEdit";
 
     export default {
+        props: {
+            panel: {required: true}
+        },
+
         components: {ClickToEdit},
         data: () => {
             return {
@@ -66,18 +70,21 @@
             }
         },
         mounted() {
-            this.getTranslations();
-            this.getLocales();
+            this.fetchMultilingualData();
         },
         methods: {
-            getTranslations() {
-                Nova.request().get(this.apiURL + 'get-translatables').then(response => {
+            fetchMultilingualData: function(){
+                this.getTranslations();
+                this.getLocales();
+            },
+            getTranslations: async function() {
+                await Nova.request().get(this.apiURL + 'get-translatables').then(response => {
                     this.translations = response.data.length !== 0 ? response.data : null;
                     this.active_tab = response.data.length !== 0 ? Object.keys(response.data)[0] : null;
                 });
             },
-            getLocales: function(){
-                Nova.request().get(this.apiURL + 'get-locales').then(response => {
+            getLocales: async function(){
+                await Nova.request().get(this.apiURL + 'get-locales').then(response => {
                     this.locales = response.data;
                 });
             },
