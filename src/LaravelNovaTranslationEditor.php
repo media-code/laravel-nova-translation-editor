@@ -8,12 +8,6 @@ use Laravel\Nova\Tool;
 
 class LaravelNovaTranslationEditor extends Tool
 {
-
-    public function __construct()
-    {
-        $this->withLocales();
-    }
-
     /**
      * Perform any tasks that need to happen when the tool is booted.
      *
@@ -34,10 +28,5 @@ class LaravelNovaTranslationEditor extends Tool
     public function renderNavigation()
     {
         return view('laravel-nova-translation-editor::navigation');
-    }
-
-    public function withLocales()
-    {
-        return $this->withMeta(['test' => 'hee']);
     }
 }
