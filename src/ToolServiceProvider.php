@@ -19,6 +19,7 @@ class ToolServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-nova-translation-editor');
 
+
         $this->app->booted(function () {
             $this->routes();
         });
@@ -45,6 +46,7 @@ class ToolServiceProvider extends ServiceProvider
 
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/laravel-nova-translation-editor')
+            ->namespace('Eboye\LaravelNovaTranslationEditor\Http\Controllers')
             ->group(__DIR__ . '/../routes/api.php');
     }
 

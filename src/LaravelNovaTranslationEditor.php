@@ -19,6 +19,7 @@ class LaravelNovaTranslationEditor extends Tool
         Nova::style('laravel-nova-translation-editor', __DIR__.'/../dist/css/tool.css');
     }
 
+
     /**
      * Build the view that renders the navigation links for the tool.
      *
